@@ -1,65 +1,59 @@
 import { defineApp } from "rwsdk/worker";
 import { render, route } from "rwsdk/router";
 import { Document } from "@/app/Document";
-import { Home } from "@/app/pages/Home";
-
-import { User, users } from "./db/schema/user-schema";
+import { MainLayout } from "@/app/layouts/Layout";
 import { setCommonHeaders } from "./app/headers";
-import { env } from "cloudflare:workers";
-import { drizzle } from "drizzle-orm/d1";
 
-export interface Env {
-  DB: D1Database;
-}
-
-export type AppContext = {
-  user: User | undefined;
-  authUrl: string;
-};
 
 export default defineApp([
   setCommonHeaders(),
+
   render(Document, [
-    route("/", async () => {
-      const userResult = await drizzle(env.DB).select().from(users);
-      return (
-        <div style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
-          <h1>Start</h1>
-          <p>Velkommen til eksempel</p>
-          <p>Databasen har {userResult.length} brukere</p>
-          <div style={{ margin: "1.5rem 0" }}>
-            <a
-              href="/home"
-              style={{
-                display: "inline-block",
-                padding: "0.5rem 1rem",
-                background: "#0070f3",
-                color: "white",
-                textDecoration: "none",
-                borderRadius: "4px",
-                fontWeight: "500",
-              }}
-            >
-              Go to Home Page
-            </a>
-          </div>
-          <p style={{ fontSize: "0.875rem", color: "#666" }}>
-            Note: The home page is protected and requires authentication. You
-            will be redirected to login if you're not signed in.
-          </p>
-        </div>
-      );
-    }),
-    route("/home", [
-      ({ ctx }) => {
-        if (!ctx.user) {
-          return new Response(null, {
-            status: 302,
-            headers: { Location: "/" },
-          });
-        }
-      },
-      Home,
-    ]),
+    route("/", () => (
+      <MainLayout>
+        <h1>Hjemmeside</h1>
+      </MainLayout>
+    )),
+
+    route("/ny-annonse", () => (
+      <MainLayout>
+        <h1>Ny annonse</h1>
+      </MainLayout>
+    )),
+
+    route("/kart", () => (
+      <MainLayout>
+        <h1>Kart</h1>
+      </MainLayout>
+    )),
+    route("/savnet", () => (
+      <MainLayout>
+        <h1>Savnet</h1>
+      </MainLayout>
+    )),
+
+    route("/funnet", () => (
+      <MainLayout>
+        <h1>Funnet</h1>
+      </MainLayout>
+    )),
+    
+    route("/gjenforent", () => (
+      <MainLayout>
+        <h1>Gjenforent</h1>
+      </MainLayout>
+    )),
+
+    route("/min-side", () => (
+      <MainLayout>
+        <h1>Min side</h1>
+      </MainLayout>
+    )),
+
+    route("/login", () => (
+        <MainLayout>
+            <h1>Login</h1>
+        </MainLayout>
+    )),
   ]),
 ]);
