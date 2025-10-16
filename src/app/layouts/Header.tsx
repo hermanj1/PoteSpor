@@ -1,7 +1,7 @@
 
 export const Header = () => {
     return (
-      <header>
+      <header className="header">
         <nav >
           <a className="logo" href="/">PoteSpor</a>
           <ul className="nav-links">
