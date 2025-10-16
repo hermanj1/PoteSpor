@@ -6,7 +6,7 @@ Se [docker sin hjemmeside](https://www.docker.com/get-started/) for installasjon
 
 Hvis på Mac så anbefales det å bruke [orbstack](https://orbstack.dev/) som er en lettere og raskere versjon av docker desktop
 
-Når docker er installert, så kkan du starte prosjektet med
+Når docker er installert, så kkan du starte prosjektet medd
 
 ```bash
 docker compose up --build
