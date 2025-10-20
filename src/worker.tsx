@@ -3,6 +3,7 @@ import { render, route } from "rwsdk/router";
 import { Document } from "@/app/Document";
 import { MainLayout } from "@/app/layouts/Layout";
 import { setCommonHeaders } from "./app/headers";
+import { MapPage } from "./app/pages/MapPage";
 
 
 export default defineApp([
@@ -24,6 +25,7 @@ export default defineApp([
     route("/kart", () => (
       <MainLayout>
         <h1>Kart</h1>
+        <MapPage />
       </MainLayout>
     )),
     route("/savnet", () => (

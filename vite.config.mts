@@ -13,6 +13,9 @@ export default defineConfig({
   environments: {
     ssr: {},
   },
+  ssr: {
+    external: ["leaflet", "react-leaflet"],
+  },
   plugins: [
     tailwindcss(),
     cloudflare({
