@@ -9,9 +9,9 @@ export default defineScript(async ({ env }) => {
 
     // Insert a user
     await db.insert(users).values({
-      id: "Test user",
+      id: 1,
       email: "test@testuser.io",
-      password: "testpassword",
+      passwordHash: "testpassword",
     });
 
     // Verify the insert by selecting all users

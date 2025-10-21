@@ -9,11 +9,6 @@ type MapComponents = {
   TileLayer: typeof import('react-leaflet').TileLayer;
 };
 
-type LeafletStatus = {
-  mapComponents: MapComponents | null;
-  isLoading: boolean;
-};
-
 export function useMap() {
   const [map, setMap] = useState<MapComponents | null>(null);
   const [loading, setLoading] = useState(true);
