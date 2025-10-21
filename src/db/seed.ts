@@ -1,5 +1,3 @@
-// src/db/seed.ts
-
 import { defineScript } from "rwsdk/worker";
 import { drizzle } from "drizzle-orm/d1";
 import { users } from "./schema";
@@ -11,8 +9,9 @@ export default defineScript(async ({ env }) => {
 
     // Insert a user
     await db.insert(users).values({
-      name: "Test user",
+      id: "Test user",
       email: "test@testuser.io",
+      password: "testpassword",
     });
 
     // Verify the insert by selecting all users

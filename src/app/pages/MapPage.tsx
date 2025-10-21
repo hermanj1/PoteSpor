@@ -1,18 +1,20 @@
 "use client"; 
 import React from 'react';
-import { useLeafletLoader } from '@/app/hooks/useLeaflet'; 
+import { useMap } from '@/app/hooks/useLeaflet'; 
+import 'leaflet/dist/leaflet.css';
+
 
 export const MapPage = () => {
-  const { mapComponents, isLoading } = useLeafletLoader();
+  const { map, loading } = useMap();
 
-  if (isLoading || !mapComponents) {
+  if (loading || !map) {
     return (
       <section>
       </section>
     );
   }
 
-  const { MapContainer, TileLayer } = mapComponents;
+  const { MapContainer, TileLayer } = map;
   const position: [number, number] = [59.1251, 11.3875]; 
 
   return (
