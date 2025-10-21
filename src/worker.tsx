@@ -4,6 +4,7 @@ import { Document } from "@/app/Document";
 import { MainLayout } from "@/app/layouts/Layout";
 import { setCommonHeaders } from "./app/headers";
 import { MapPage } from "./app/pages/MapPage";
+import LoginPage from "./app/pages/LoginPage";
 
 
 export default defineApp([
@@ -54,7 +55,7 @@ export default defineApp([
 
     route("/login", () => (
         <MainLayout>
-            <h1>Login</h1>
+            <LoginPage />
         </MainLayout>
     )),
   ]),
