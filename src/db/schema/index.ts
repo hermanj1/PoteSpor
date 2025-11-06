@@ -1,9 +1,9 @@
 import { drizzle } from 'drizzle-orm/d1';
 import { env } from 'cloudflare:workers';
-import * as usersSchema from './users';
-import * as sessionsSchema from './sessions';
+import * as usersSchema from "./users";
+import * as sessionsSchema from "./sessions";
 
-const schema = {
+export const schema = {
   ...usersSchema,
   ...sessionsSchema,
 };
