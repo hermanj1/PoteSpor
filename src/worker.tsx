@@ -5,10 +5,24 @@ import { MainLayout } from "@/app/layouts/Layout";
 import { setCommonHeaders } from "./app/headers";
 import { MapPage } from "./app/pages/MapPage";
 import LoginPage from "./app/pages/LoginPage";
-
+import { loginHandler, registerHandler } from "./app/api/authController";
 
 export default defineApp([
   setCommonHeaders(),
+
+  route("/api/login", async ({ request }) => {
+    if (request.method === "POST") {
+      return loginHandler(request);
+    }
+    return new Response("Method Not Allowed", { status: 405 });
+  }),
+  
+  route("/api/register", async ({ request }) => {
+    if (request.method === "POST") {
+      return registerHandler(request);
+    }
+    return new Response("Method Not Allowed", { status: 405 });
+  }),
 
   render(Document, [
     route("/", () => (

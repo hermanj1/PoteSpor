@@ -1,23 +1,25 @@
 import { defineScript } from "rwsdk/worker";
 import { drizzle } from "drizzle-orm/d1";
-import { users } from "./schema";
+import { schema } from "./schema";
+import { hashPass } from "../app/lib/auth";
 
 export default defineScript(async ({ env }) => {
   try {
-    const db = drizzle(env.DB);
-    await db.delete(users);
+    const db = drizzle(env.DB, { schema });
 
-    // Insert a user
-    await db.insert(users).values({
+    await db.delete(schema.users);
+
+    const hashedPassword = await hashPass("password123");
+
+    await db.insert(schema.users).values({
       id: 1,
-      email: "test@testuser.io",
-      passwordHash: "testpassword",
+      email: "test@bruker.no",
+      password_hash: hashedPassword,
     });
 
-    // Verify the insert by selecting all users
-    const result = await db.select().from(users).all();
+    const result = await db.select().from(schema.users).all();
 
-    console.log("🌱 Finished seeding");
+    console.log("Finished seeding");
 
     return Response.json(result);
   } catch (error) {
