@@ -1,36 +1,70 @@
-import { getUserByEmail, createUser as createUserRepo } from "@/db/repositories/userRepository";
-import { hashPass, verifyPass, type LoginSchema, type RegisterSchema } from "@/app/lib/auth";
+// src/app/services/authService.ts
+import { db } from "@/db";
+import { users } from "@/db/schema/users";
+import { eq } from "drizzle-orm";
+import { hashPass, verifyPass } from "@/app/lib/auth";
 import type { z } from "zod";
-  
-  export async function registerService(
-    data: z.infer<typeof RegisterSchema>
-  ) {
-    const existingUser = await getUserByEmail(data.email);
-    if (existingUser) {
-      throw new Error("En bruker med denne e-posten finnes allerede");
-    }
-  
-    const password_hash = await hashPass(data.password);
-  
-    const newUser = await createUserRepo({
-      email: data.email,
-      password_hash: password_hash,
-    });
-  
-    return newUser;
+import { LoginSchema, RegisterSchema } from "@/app/lib/auth";
+
+export type LoginInput = z.infer<typeof LoginSchema>;
+export type RegisterInput = z.infer<typeof RegisterSchema>;
+
+// Registrer ny bruker
+export async function registerService(data: RegisterInput) {
+  const { email, password, name ,} = data;
+
+  // Sjekk om bruker med samme e-post allerede finnes
+  const existing = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  if (existing.length > 0) {
+    throw new Error("Bruker med denne e-posten finnes allerede");
   }
-  
-  export async function loginService(data: z.infer<typeof LoginSchema>) {
-    const user = await getUserByEmail(data.email);
-    if (!user) {
-      throw new Error("Ugyldig e-post eller passord");
-    }
-  
-  
-    const isPasswordValid = await verifyPass(user.password_hash, data.password);
-    if (!isPasswordValid) {
-      throw new Error("Ugyldig e-post eller passord");
-    }
-  
-    return user;
+
+  const passwordHash = await hashPass(password);
+
+  const inserted = await db
+    .insert(users)
+    .values({
+      email,
+      passwordHash,
+      name,
+    })
+    .returning();
+
+  const user = inserted[0];
+
+  if (!user) {
+    throw new Error("Kunne ikke opprette bruker");
   }
+
+  return user;
+}
+
+// Logg inn eksisterende bruker
+export async function loginService(data: LoginInput) {
+  const { email, password } = data;
+
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  const user = result[0];
+
+  if (!user) {
+    throw new Error("Feil e-post eller passord");
+  }
+
+  const isValid = await verifyPass(user.passwordHash, password);
+
+  if (!isValid) {
+    throw new Error("Feil e-post eller passord");
+  }
+
+  return user;
+}

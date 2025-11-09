@@ -53,6 +53,10 @@ export default function Login() {
           <button type="submit" className="btn">
             Logg inn
           </button>
+
+          <button type="button" className="btn" onClick={() => window.location.href = "/register"}>
+            Registrer ny bruker
+          </button>
         </form>
       </section>
     </main>
