@@ -3,9 +3,10 @@
   "name": "simple-start",
   "main": "src/worker.tsx",
   "compatibility_date": "2025-08-29",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
+
+  "account_id": "057987daa0292594c58317b448b22272",
+
   "assets": {
     "binding": "ASSETS",
     "directory": "public"
@@ -17,8 +18,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "simple-start",
-      "database_id": "__change_me__",
+      "database_name": "potespor",
+      "database_id": "b2411ee7-dc56-4723-a606-41a5959535df",
       "migrations_dir": "drizzle"
     }
   ],

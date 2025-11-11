@@ -12,7 +12,7 @@ export async function createUser(data: { email: string; password_hash: string })
     .insert(users)
     .values({
       email: data.email,
-      password_hash: data.password_hash,
+      passwordHash: data.password_hash,
     })
     .returning();
   return newUser;

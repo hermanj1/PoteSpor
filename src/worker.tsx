@@ -5,6 +5,7 @@ import { MainLayout } from "@/app/layouts/Layout";
 import { setCommonHeaders } from "./app/headers";
 import { MapPage } from "./app/pages/MapPage";
 import LoginPage from "./app/pages/LoginPage";
+import { RegisterPage } from "./app/pages/RegisterPage";
 import { loginHandler, registerHandler } from "./app/api/authController";
 
 export default defineApp([
@@ -72,5 +73,12 @@ export default defineApp([
             <LoginPage />
         </MainLayout>
     )),
+    
+    route("/register", () => (
+        <MainLayout>
+            <RegisterPage />
+        </MainLayout>
+    )),
+
   ]),
 ]);

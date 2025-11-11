@@ -12,9 +12,9 @@ export default defineScript(async ({ env }) => {
     const hashedPassword = await hashPass("password123");
 
     await db.insert(schema.users).values({
-      id: 1,
       email: "test@bruker.no",
-      password_hash: hashedPassword,
+      passwordHash: hashedPassword,
+      name: "Test Bruker",
     });
 
     const result = await db.select().from(schema.users).all();

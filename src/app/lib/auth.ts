@@ -14,6 +14,7 @@ export const LoginSchema = z.object({
 export const RegisterSchema = z.object({
   email: z.string().regex(emailRegex, "Ugyldig e-postadresse"),
   password: z.string().min(8, "Passord må være minst 8 tegn"),
+  name: z.string().min(1, "Navn kan ikke være tomt"),
 });
 
 export const SESSION_COOKIE_NAME = "potespor_session";

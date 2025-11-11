@@ -1,7 +1,10 @@
 // src/db/index.ts
-
 import { drizzle } from "drizzle-orm/d1";
-import { env } from "cloudflare:workers";
-import * as schema from "./schema";
 
-export const db = drizzle(env.DB, { schema });
+export interface Env {
+  potespor: D1Database;
+}
+
+export function getDb(env: Env) {
+  return drizzle(env.potespor);
+}
