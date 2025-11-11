@@ -7,12 +7,12 @@ export async function getUserByEmail(email: string) {
   return result[0];
 }
 
-export async function createUser(data: { email: string; password_hash: string }) {
+export async function createUser(data: { email: string; passwordHash: string }) {
   const [newUser] = await db
     .insert(users)
     .values({
       email: data.email,
-      password_hash: data.password_hash,
+      passwordHash: data.passwordHash,
     })
     .returning();
   return newUser;
