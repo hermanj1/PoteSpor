@@ -7,6 +7,7 @@ import { MapPage } from "./app/pages/MapPage";
 import LoginPage from "./app/pages/LoginPage";
 import { RegisterPage } from "./app/pages/RegisterPage";
 import { loginHandler, registerHandler } from "./app/api/authController";
+import NewReportPage from "./app/pages/NewReportPage"; 
 
 export default defineApp([
   setCommonHeaders(),
@@ -17,7 +18,7 @@ export default defineApp([
     }
     return new Response("Method Not Allowed", { status: 405 });
   }),
-  
+
   route("/api/register", async ({ request }) => {
     if (request.method === "POST") {
       return registerHandler(request);
@@ -34,7 +35,7 @@ export default defineApp([
 
     route("/ny-annonse", () => (
       <MainLayout>
-        <h1>Ny annonse</h1>
+        <NewReportPage />
       </MainLayout>
     )),
 
@@ -55,7 +56,7 @@ export default defineApp([
         <h1>Funnet</h1>
       </MainLayout>
     )),
-    
+
     route("/gjenforent", () => (
       <MainLayout>
         <h1>Gjenforent</h1>
@@ -69,16 +70,16 @@ export default defineApp([
     )),
 
     route("/login", () => (
-        <MainLayout>
-            <LoginPage />
-        </MainLayout>
-    )),
-    
-    route("/register", () => (
-        <MainLayout>
-            <RegisterPage />
-        </MainLayout>
+      <MainLayout>
+        <LoginPage />
+      </MainLayout>
     )),
 
-  ]),
+    route("/register", () => (
+      <MainLayout>
+          <RegisterPage />
+      </MainLayout>
+  )),  
+
+]),
 ]);
