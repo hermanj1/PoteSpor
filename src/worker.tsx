@@ -7,6 +7,7 @@ import { MapPage } from "./app/pages/MapPage";
 import LoginPage from "./app/pages/LoginPage";
 import { RegisterPage } from "./app/pages/RegisterPage";
 import { loginHandler, registerHandler } from "./app/api/authController";
+import Home from "./app/pages/Home";
 import NewReportPage from "./app/pages/NewReportPage"; 
 
 export default defineApp([
@@ -29,7 +30,7 @@ export default defineApp([
   render(Document, [
     route("/", () => (
       <MainLayout>
-        <h1>Hjemmeside</h1>
+        <Home />
       </MainLayout>
     )),
 
