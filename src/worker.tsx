@@ -7,6 +7,7 @@ import { MapPage } from "./app/pages/MapPage";
 import LoginPage from "./app/pages/LoginPage";
 import { RegisterPage } from "./app/pages/RegisterPage";
 import { loginHandler, registerHandler } from "./app/api/authController";
+import Home from "./app/pages/Home";
 
 export default defineApp([
   setCommonHeaders(),
@@ -28,7 +29,8 @@ export default defineApp([
   render(Document, [
     route("/", () => (
       <MainLayout>
-        <h1>Hjemmeside</h1>
+        <h1>Hjem</h1>
+        <Home />
       </MainLayout>
     )),
 
