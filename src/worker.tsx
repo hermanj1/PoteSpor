@@ -29,7 +29,6 @@ export default defineApp([
   render(Document, [
     route("/", () => (
       <MainLayout>
-        <h1>Hjem</h1>
         <Home />
       </MainLayout>
     )),

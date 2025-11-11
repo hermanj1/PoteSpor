@@ -124,38 +124,28 @@
 }
 
 .articles {
-  max-width: 700px;
+  max-width: 800px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
 .article {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   background: #f8e8fb;
-  border-radius: 10px;
   padding: 1rem 1.2rem;
   box-shadow: 0 2px 5px rgba(0,0,0,0.08);
   margin-bottom: 1rem;
+  gap: 2rem;
 }
 
-.article h2 {
+.article h2, p{
   margin: 0.4rem 0 0.3rem;
   font-size: 1.1rem;
 }
 
-.article p {
-  margin: 0.3rem 0;
-  line-height: 1.4;
-}
 
-.article-image {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 0.6rem;
-}
+
 
 .meta {
   font-size: 0.85rem;
@@ -163,12 +153,8 @@
 }
 
 .status {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  margin-bottom: 0.3rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .status.savnet {
@@ -184,4 +170,11 @@
 .status.gjenforent {
   background: #dcfce7;
   color: #166534;
+}
+.article-image {
+  width: 100%; 
+  height: 170px; 
+  object-fit: cover; 
+  border-radius: 8px;
+ 
 }
