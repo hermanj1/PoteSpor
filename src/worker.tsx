@@ -8,7 +8,7 @@ import LoginPage from "./app/pages/LoginPage";
 import { RegisterPage } from "./app/pages/RegisterPage";
 import { loginHandler, registerHandler } from "./app/api/authController";
 import Home from "./app/pages/Home";
-import NewReportPage from "./app/pages/NewReportPage"; 
+import NewReportPage from "./app/pages/NewReportPage";
 
 export default defineApp([
   setCommonHeaders(),
@@ -78,9 +78,8 @@ export default defineApp([
 
     route("/register", () => (
       <MainLayout>
-          <RegisterPage />
+        <RegisterPage />
       </MainLayout>
-  )),  
-
-]),
+    )),
+  ]),
 ]);
