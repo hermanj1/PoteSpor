@@ -1,8 +1,8 @@
 import { z } from "zod";
 import * as bcrypt from "bcryptjs";
-import { db } from "@/db";
 import { sessions } from "@/db/schema/sessions";
 import { eq } from "drizzle-orm";
+import type { DbClient } from "@/db";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -17,6 +17,9 @@ export const RegisterSchema = z.object({
   name: z.string().min(1, "Navn kan ikke være tomt"),
 });
 
+export type LoginInput = z.infer<typeof LoginSchema>;
+export type RegisterInput = z.infer<typeof RegisterSchema>;
+
 export const SESSION_COOKIE_NAME = "potespor_session";
 const SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -28,7 +31,7 @@ export async function verifyPass(hash: string, password: string) {
   return await bcrypt.compare(password, hash);
 }
 
-export async function createSession(userId: number) {
+export async function createSession(db: DbClient, userId: number) {
   const sessionId = crypto.randomUUID();
   const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
 
@@ -41,6 +44,6 @@ export async function createSession(userId: number) {
   return sessionId;
 }
 
-export async function clearSession(sessionId: string) {
+export async function clearSession(db: DbClient, sessionId: string) {
   await db.delete(sessions).where(eq(sessions.id, sessionId));
 }

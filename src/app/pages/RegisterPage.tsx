@@ -80,8 +80,8 @@ export function RegisterPage() {
         </form>
       </section>
       
-      {error && <p style={{ color: "red", marginTop: "1rem" }}>{error}</p>}
-      {message && <p style={{ color: "green", marginTop: "1rem" }}>{message}</p>}
+      {error && <p className="error-message">{error}</p>}
+      {message && <p className="success-message">{message}</p>}
     </main>
   );
 }
