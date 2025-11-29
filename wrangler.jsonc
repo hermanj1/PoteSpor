@@ -2,11 +2,11 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "simple-start",
   "main": "src/worker.tsx",
-  "compatibility_date": "2025-08-29",
-  "compatibility_flags": ["nodejs_compat"],
-
+  "compatibility_date": "2025-10-11",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "account_id": "057987daa0292594c58317b448b22272",
-
   "assets": {
     "binding": "ASSETS",
     "directory": "public"
@@ -20,7 +20,8 @@
       "binding": "DB",
       "database_name": "potespor",
       "database_id": "b2411ee7-dc56-4723-a606-41a5959535df",
-      "migrations_dir": "drizzle"
+      "migrations_dir": "drizzle",
+      "remote": true
     }
   ],
   "r2_buckets": [
