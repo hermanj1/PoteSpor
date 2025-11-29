@@ -1,10 +1,19 @@
-// src/db/index.ts
-import { drizzle } from "drizzle-orm/d1";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import * as schema from "./schema";
 
 export interface Env {
-  potespor: D1Database;
+  DATABASE_URL: string;
 }
 
 export function getDb(env: Env) {
-  return drizzle(env.potespor);
+ 
+  const url = env?.DATABASE_URL || (typeof process !== "undefined" ? process.env?.DATABASE_URL : null);
+  
+  if (!url) throw new Error("Fant ikke DATABASE_URL");
+
+  const client = postgres(url, { prepare: false });
+  return drizzle(client, { schema });
 }
+
+export type DbClient = ReturnType<typeof getDb>;

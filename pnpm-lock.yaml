@@ -30,8 +30,8 @@ importers:
         specifier: ^17.2.3
         version: 17.2.3
       drizzle-orm:
-        specifier: ^0.44.6
-        version: 0.44.6(@cloudflare/workers-types@4.20251011.0)(better-sqlite3@12.4.1)(kysely@0.28.8)
+        specifier: ^0.44.7
+        version: 0.44.7(@cloudflare/workers-types@4.20251011.0)(better-sqlite3@12.4.1)(kysely@0.28.8)(postgres@3.4.7)
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4
@@ -44,6 +44,9 @@ importers:
       ohash:
         specifier: ^2.0.11
         version: 2.0.11
+      postgres:
+        specifier: ^3.4.7
+        version: 3.4.7
       react:
         specifier: 19.2.0
         version: 19.2.0
@@ -1830,8 +1833,8 @@ packages:
     resolution: {integrity: sha512-+CHgPFzuoTQTt7cOYCV6MOw2w8vqEn/ap1yv4bpZOWL03u7rlVRQhUY0WYT3rHsgVTXwYQDZaSUJSQrMBUKuWg==}
     hasBin: true
 
-  drizzle-orm@0.44.6:
-    resolution: {integrity: sha512-uy6uarrrEOc9K1u5/uhBFJbdF5VJ5xQ/Yzbecw3eAYOunv5FDeYkR2m8iitocdHBOHbvorviKOW5GVw0U1j4LQ==}
+  drizzle-orm@0.44.7:
+    resolution: {integrity: sha512-quIpnYznjU9lHshEOAYLoZ9s3jweleHlZIAWR/jX9gAWNg/JhQ1wj0KGRf7/Zm+obRrYd9GjPVJg790QY9N5AQ==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
@@ -2781,6 +2784,10 @@ packages:
   postcss@8.5.6:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
+
+  postgres@3.4.7:
+    resolution: {integrity: sha512-Jtc2612XINuBjIl/QTWsV5UvE8UHuNblcO3vVADSrKsrc6RqGX6lOW1cEo3CM2v0XG4Nat8nI+YM7/f26VxXLw==}
+    engines: {node: '>=12'}
 
   prebuild-install@7.1.3:
     resolution: {integrity: sha512-8Mf2cbV7x1cXPUILADGI3wuhfqWvtiLA1iclTDbFRZkgRQS0NqsPZphna9V+HyTEadheuPmjaJMsbzKQFOzLug==}
@@ -5018,11 +5025,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.44.6(@cloudflare/workers-types@4.20251011.0)(better-sqlite3@12.4.1)(kysely@0.28.8):
+  drizzle-orm@0.44.7(@cloudflare/workers-types@4.20251011.0)(better-sqlite3@12.4.1)(kysely@0.28.8)(postgres@3.4.7):
     optionalDependencies:
       '@cloudflare/workers-types': 4.20251011.0
       better-sqlite3: 12.4.1
       kysely: 0.28.8
+      postgres: 3.4.7
 
   dunder-proto@1.0.1:
     dependencies:
@@ -6102,6 +6110,8 @@ snapshots:
       nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
+
+  postgres@3.4.7: {}
 
   prebuild-install@7.1.3:
     dependencies:
