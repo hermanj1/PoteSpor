@@ -2,28 +2,31 @@ import { defineApp } from "rwsdk/worker";
 import { render, route } from "rwsdk/router";
 import { Document } from "@/app/Document";
 import { MainLayout } from "@/app/layouts/Layout";
-import { setCommonHeaders } from "./app/headers";
 import { MapPage } from "./app/pages/MapPage";
 import LoginPage from "./app/pages/LoginPage";
 import { RegisterPage } from "./app/pages/RegisterPage";
-import { loginHandler, registerHandler } from "./app/api/authController";
 import Home from "./app/pages/Home";
-import NewReportPage from "./app/pages/NewReportPage"; 
+import NewReportPage from "./app/pages/NewReportPage";
+
+import { loginHandler, registerHandler } from "./app/api/authController";
+import type { Env } from "@/db"; 
+
+type Context = {
+  request: Request;
+  env: Env;
+};
 
 export default defineApp([
-  setCommonHeaders(),
-
-  route("/api/login", async ({ request }) => {
-    if (request.method === "POST") {
-      return loginHandler(request);
-    }
+  
+  route("/api/login", async (ctx) => {
+    const { request, env } = ctx as unknown as Context;
+    if (request.method === "POST") return loginHandler(request, env);
     return new Response("Method Not Allowed", { status: 405 });
   }),
 
-  route("/api/register", async ({ request }) => {
-    if (request.method === "POST") {
-      return registerHandler(request);
-    }
+  route("/api/register", async (ctx) => {
+    const { request, env } = ctx as unknown as Context;
+    if (request.method === "POST") return registerHandler(request, env);
     return new Response("Method Not Allowed", { status: 405 });
   }),
 
