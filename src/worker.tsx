@@ -81,9 +81,8 @@ export default defineApp([
 
     route("/register", () => (
       <MainLayout>
-          <RegisterPage />
+        <RegisterPage />
       </MainLayout>
-  )),  
-
-]),
+    )),
+  ]),
 ]);
