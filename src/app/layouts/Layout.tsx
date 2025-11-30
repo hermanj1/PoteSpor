@@ -1,10 +1,17 @@
-import { Header } from './Header'
-import { Footer } from './Footer'
+import { Header } from '../layouts/Header' 
+import { Footer } from '../layouts/Footer' 
+import { SelectUser } from "@/db/schema/users";
 
-export const MainLayout = ({ children }: { children: React.ReactNode }) => {
+export const MainLayout = ({ 
+  children, 
+  user 
+}: { 
+  children: React.ReactNode; 
+  user?: SelectUser | null;
+}) => {
   return (
     <div className="layout-container">
-      <Header />
+      <Header user={user} />
       <main>
         {children}
       </main>

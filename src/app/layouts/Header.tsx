@@ -1,5 +1,6 @@
+import { SelectUser } from "@/db/schema/users";
 
-export const Header = () => {
+export const Header = ({ user }: { user?: SelectUser | null }) => {
     return (
       <header className="header">
         <nav>
@@ -12,8 +13,16 @@ export const Header = () => {
             <li><a href="/gjenforent">Gjenforent</a></li>
           </ul>
           <ul className="user-links">
-            <li><a href="/min-side">Min side</a></li>
-            <li><a href="/login">Logg inn</a></li>
+            {user ? (
+              <>
+                <li >
+                    Hei, {user.name}
+                </li>
+                <li><a href="/min-side">Min side</a></li>
+              </>
+            ) : (
+              <li><a href="/login">Logg inn</a></li>
+            )}
           </ul>
         </nav>
       </header>

@@ -9,12 +9,19 @@ import Home from "./app/pages/Home";
 import NewReportPage from "./app/pages/NewReportPage";
 
 import { loginHandler, registerHandler } from "./app/api/authController";
-import type { Env } from "@/db"; 
+import { getDb, type Env } from "@/db"; 
+import { getSessionUser } from "@/app/lib/auth"; 
 
 type Context = {
   request: Request;
   env: Env;
 };
+
+async function getUser(ctx: unknown) {
+  const context = ctx as Context;
+  const db = getDb(context.env);
+  return await getSessionUser(db, context.request);
+}
 
 export default defineApp([
   
@@ -31,59 +38,112 @@ export default defineApp([
   }),
 
   render(Document, [
-    route("/", () => (
-      <MainLayout>
-        <Home />
-      </MainLayout>
-    )),
+    route("/", async (ctx) => {
+      const user = await getUser(ctx);
+      return (
+        <MainLayout user={user}>
+          <Home />
+        </MainLayout>
+      );
+    }),
 
-    route("/ny-annonse", () => (
-      <MainLayout>
-        <NewReportPage />
-      </MainLayout>
-    )),
+    route("/ny-annonse", async (ctx) => {
+      const user = await getUser(ctx);
+      return (
+        <MainLayout user={user}>
+          <NewReportPage />
+        </MainLayout>
+      );
+    }),
 
-    route("/kart", () => (
-      <MainLayout>
-        <h1>Kart</h1>
-        <MapPage />
-      </MainLayout>
-    )),
-    route("/savnet", () => (
-      <MainLayout>
-        <h1>Savnet</h1>
-      </MainLayout>
-    )),
+    route("/kart", async (ctx) => {
+      const user = await getUser(ctx);
+      return (
+        <MainLayout user={user}>
+          <h1>Kart</h1>
+          <MapPage />
+        </MainLayout>
+      );
+    }),
 
-    route("/funnet", () => (
-      <MainLayout>
-        <h1>Funnet</h1>
-      </MainLayout>
-    )),
+    route("/savnet", async (ctx) => {
+      const user = await getUser(ctx);
+      return (
+        <MainLayout user={user}>
+          <h1>Savnet</h1>
+        </MainLayout>
+      );
+    }),
 
-    route("/gjenforent", () => (
-      <MainLayout>
-        <h1>Gjenforent</h1>
-      </MainLayout>
-    )),
+    route("/funnet", async (ctx) => {
+      const user = await getUser(ctx);
+      return (
+        <MainLayout user={user}>
+          <h1>Funnet</h1>
+        </MainLayout>
+      );
+    }),
 
-    route("/min-side", () => (
-      <MainLayout>
-        <h1>Min side</h1>
-      </MainLayout>
-    )),
+    route("/gjenforent", async (ctx) => {
+      const user = await getUser(ctx);
+      return (
+        <MainLayout user={user}>
+          <h1>Gjenforent</h1>
+        </MainLayout>
+      );
+    }),
 
-    route("/login", () => (
-      <MainLayout>
-        <LoginPage />
-      </MainLayout>
-    )),
+    route("/min-side", async (ctx) => {
+      const user = await getUser(ctx);
 
-    route("/register", () => (
-      <MainLayout>
-          <RegisterPage />
-      </MainLayout>
-  )),  
+      if (!user) {
+        return new Response(null, { 
+            status: 302, 
+            headers: { Location: "/login" } 
+        });
+      }
+
+      return (
+        <MainLayout user={user}>
+          <h1>Min side</h1>
+        </MainLayout>
+      );
+    }),
+
+    // LOGIN
+    route("/login", async (ctx) => {
+      const user = await getUser(ctx);
+
+      if (user) {
+        return new Response(null, { 
+            status: 302, 
+            headers: { Location: "/min-side" } 
+        });
+      }
+
+      return (
+        <MainLayout user={user}>
+          <LoginPage />
+        </MainLayout>
+      );
+    }),
+
+    route("/register", async (ctx) => {
+      const user = await getUser(ctx);
+
+      if (user) {
+        return new Response(null, { 
+            status: 302, 
+            headers: { Location: "/min-side" } 
+        });
+      }
+
+      return (
+        <MainLayout user={user}>
+            <RegisterPage />
+        </MainLayout>
+      );
+  }),  
 
 ]),
 ]);
