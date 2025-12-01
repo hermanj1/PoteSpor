@@ -1,6 +1,6 @@
 import { supabase } from "./supabaseClient";
 
-export async function uploadImage(file: File, bucket = "images") {
+export async function uploadImage(file: File, bucket = "imageUploader") {
   const fileName = `${Date.now()}-${file.name}`;
   
   const { error } = await supabase.storage

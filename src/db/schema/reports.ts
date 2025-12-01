@@ -23,3 +23,6 @@ export const reports = pgTable("reports", {
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+export type InsertReport = typeof reports.$inferInsert;
+export type SelectReport = typeof reports.$inferSelect;

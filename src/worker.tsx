@@ -9,6 +9,8 @@ import NewReportPage from "./app/pages/NewReportPage";
 import { loginHandler, registerHandler } from "./app/api/authController";
 import { createReportHandler } from "./app/api/reportController";
 import type { Env } from "@/db"; 
+import { getDb } from "@/db"; 
+import { getLatestReports, getReportsByStatus } from "@/app/lib/dbQueries"; 
 import { publicRoute, protectedRoute, authRoute } from "@/app/lib/routeHelpers";
 
 type Context = {
@@ -37,17 +39,38 @@ export default defineApp([
   }),
 
   render(Document, [
-    route("/", (ctx: any) => publicRoute(ctx, Home)),
+    
+    route("/", async (ctx: any) => {
+      const db = getDb(ctx.env);
+      const reports = await getLatestReports(db); 
+      
+      return publicRoute(ctx, () => <Home reports={reports} />);
+    }),
 
     route("/ny-annonse", (ctx: any) => protectedRoute(ctx, NewReportPage)),
 
     route("/kart", (ctx: any) => publicRoute(ctx, MapPage)),
 
-    route("/savnet", (ctx: any) => publicRoute(ctx, () => <h1>Savnet</h1>)),
+    route("/savnet", async (ctx: any) => {
+      const db = getDb(ctx.env);
+      const reports = await getReportsByStatus(db, "savnet");
+      
+      return publicRoute(ctx, () => <Home title="savnet" reports={reports} />);
+    }),
 
-    route("/funnet", (ctx: any) => publicRoute(ctx, () => <h1>Funnet</h1>)),
+    route("/funnet", async (ctx: any) => {
+      const db = getDb(ctx.env);
+      const reports = await getReportsByStatus(db, "funnet");
+      
+      return publicRoute(ctx, () => <Home title="funnet" reports={reports} />);
+    }),
 
-    route("/gjenforent", (ctx: any) => publicRoute(ctx, () => <h1>Gjenforent</h1>)),
+    route("/gjenforent", async (ctx: any) => {
+      const db = getDb(ctx.env);
+      const reports = await getReportsByStatus(db, "gjenforent");
+      
+      return publicRoute(ctx, () => <Home title="gjenforent" reports={reports} />);
+    }),
 
     route("/min-side", (ctx: any) => protectedRoute(ctx, () => <h1>Min side</h1>)),
 
