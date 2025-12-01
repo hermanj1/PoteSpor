@@ -23,6 +23,7 @@
     "seed": "npm run worker:run ./src/db/seed.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.86.0",
     "@tailwindcss/vite": "^4.1.17",
     "argon2": "^0.44.0",
     "bcryptjs": "^3.0.3",
