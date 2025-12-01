@@ -1,15 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useMap } from "@/app/hooks/useLeaflet";
-import "leaflet/dist/leaflet.css";
 import type { SelectUser } from "@/db/schema/users";
 import { REPORT_STATUSES, SPECIES, SEX_OPTIONS, YES_NO_OPTIONS } from "@/app/lib/constants";
 import { FormInput, FormSelect, FormTextArea } from "@/app/components/FormFields";
+import { ReportMap } from "@/app/components/ReportMap";
 import { uploadImage } from "@/app/lib/storage";
 
 export default function NewReportPage({ user }: { user?: SelectUser }) {
-  const { map, loading: mapLoading } = useMap(); 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -79,17 +77,7 @@ export default function NewReportPage({ user }: { user?: SelectUser }) {
         <FormInput label="Når ble dyret borte?" name="dateMissing" type="date" value={formData.dateMissing} onChange={handleChange} />
 
         <label>Hvor ble dyret borte?</label>
-        {mapLoading && <div className="input map-placeholder"></div>}
-        {!mapLoading && map && (
-          <map.MapContainer center={[59.9139, 10.7522]}
-           zoom={13} 
-           className="report-map-container" >
-            <map.TileLayer
-             attribution='&copy; 
-             OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-             />
-          </map.MapContainer>
-        )}
+        <ReportMap />
         
         <FormTextArea label="Beskrivelse av hendelse" name="description" value={formData.description} onChange={handleChange} />
       </div>
