@@ -15,9 +15,6 @@ export const Header = ({ user }: { user?: SelectUser | null }) => {
           <ul className="user-links">
             {user ? (
               <>
-                <li >
-                    Hei, {user.name}
-                </li>
                 <li><a href="/min-side">Min side</a></li>
               </>
             ) : (
@@ -28,3 +25,5 @@ export const Header = ({ user }: { user?: SelectUser | null }) => {
       </header>
     )
   }
+
+  

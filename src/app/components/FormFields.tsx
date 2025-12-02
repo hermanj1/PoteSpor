@@ -1,3 +1,4 @@
+const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 interface BaseProps {
   label: string;
@@ -19,7 +20,9 @@ export const FormSelect = ({ label, name, value, onChange, options }: BaseProps 
     <label htmlFor={name}>{label}</label>
     <select id={name} name={name} className="input" value={value} onChange={onChange}>
       {options.map((opt) => (
-        <option key={opt} value={opt}></option>
+       <option key={opt} value={opt}>
+          {capitalize(opt)} 
+        </option>
       ))}
     </select>
   </>

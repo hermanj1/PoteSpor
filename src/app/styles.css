@@ -5,7 +5,11 @@
 .header {
   padding: 0 2rem;
   position: sticky;
+  top: 0;           
   background-color: #EEC6F5;
+  z-index: 1000;    
+  width: 100%;      
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
 }
 
 .header nav {
@@ -135,7 +139,12 @@ footer {
 .layout-container {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; 
+  min-height: 100vh; 
+  width: 100%;
+}
+
+.layout-container > main {
+  flex: 1; 
   width: 100%;
 }
 

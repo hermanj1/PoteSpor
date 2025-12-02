@@ -74,3 +74,17 @@ export async function registerHandler(request: Request, env: Env) {
     return handleApiError(error);
   }
 }
+
+export async function logoutHandler(request: Request) {
+  const headers = new Headers();
+  headers.append("Location", "/");
+  headers.append(
+    "Set-Cookie",
+    `${SESSION_COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`
+  );
+
+  return new Response(null, {
+    status: 302, 
+    headers: headers,
+  });
+}

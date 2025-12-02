@@ -10,7 +10,7 @@ export function getDb(env: Env) {
  
   const url = env?.DATABASE_URL || (typeof process !== "undefined" ? process.env?.DATABASE_URL : null);
   
-  if (!url) throw new Error("Fant ikke DATABASE_URL");
+  if (!url) throw new Error("Fant ikke database URL");
 
   const client = postgres(url, { prepare: false });
   return drizzle(client, { schema });

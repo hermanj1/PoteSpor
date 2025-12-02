@@ -5,9 +5,13 @@ import { MapPage } from "./app/pages/MapPage";
 import LoginPage from "./app/pages/LoginPage";
 import { RegisterPage } from "./app/pages/RegisterPage";
 import Home from "./app/pages/Home";
+import { MyPage } from "./app/pages/MyPage";
 import NewReportPage from "./app/pages/NewReportPage";
-import { loginHandler, registerHandler } from "./app/api/authController";
+import { loginHandler, registerHandler, logoutHandler } from "./app/api/authController";
+import { createReportHandler } from "./app/api/reportController";
 import type { Env } from "@/db"; 
+import { getDb } from "@/db"; 
+import { getLatestReports, getReportsByStatus, getAllReportsWithCoordinates } from "@/app/lib/dbQueries"; 
 import { publicRoute, protectedRoute, authRoute } from "@/app/lib/routeHelpers";
 
 type Context = {
@@ -29,23 +33,61 @@ export default defineApp([
     return new Response("Method Not Allowed", { status: 405 });
   }),
 
+  route("/api/logout", async (ctx) => {
+    const { request } = ctx as unknown as Context;
+    if (request.method === "POST") return logoutHandler(request);
+    return new Response("Method Not Allowed", { status: 405 });
+  }),
+
+  route("/api/reports", async (ctx) => {
+    const { request, env } = ctx as unknown as Context;
+    if (request.method === "POST") return createReportHandler(request, env);
+    return new Response("Method Not Allowed", { status: 405 });
+  }),
+
   render(Document, [
-    route("/", (ctx) => publicRoute(ctx, Home)),
+    
+    route("/", async (ctx: any) => {
+      const db = getDb(ctx.env);
+      const reports = await getLatestReports(db); 
+      
+      return publicRoute(ctx, () => <Home reports={reports} />);
+    }),
 
-    route("/ny-annonse", (ctx) => protectedRoute(ctx, NewReportPage)),
+    route("/ny-annonse", (ctx: any) => protectedRoute(ctx, NewReportPage)),
 
-    route("/kart", (ctx) => publicRoute(ctx, MapPage)),
+    route("/kart", async (ctx: any) => {
+      const db = getDb(ctx.env);
+      const reports = await getAllReportsWithCoordinates(db);
 
-    route("/savnet", (ctx) => publicRoute(ctx, () => <h1>Savnet</h1>)),
+      return publicRoute(ctx, () => <MapPage reports={reports} />);
+    }),
 
-    route("/funnet", (ctx) => publicRoute(ctx, () => <h1>Funnet</h1>)),
+    route("/savnet", async (ctx: any) => {
+      const db = getDb(ctx.env);
+      const reports = await getReportsByStatus(db, "savnet");
+      
+      return publicRoute(ctx, () => <Home  reports={reports} />);
+    }),
 
-    route("/gjenforent", (ctx) => publicRoute(ctx, () => <h1>Gjenforent</h1>)),
+    route("/funnet", async (ctx: any) => {
+      const db = getDb(ctx.env);
+      const reports = await getReportsByStatus(db, "funnet");
+      
+      return publicRoute(ctx, () => <Home  reports={reports} />);
+    }),
 
-    route("/min-side", (ctx) => protectedRoute(ctx, () => <h1>Min side</h1>)),
+    route("/gjenforent", async (ctx: any) => {
+      const db = getDb(ctx.env);
+      const reports = await getReportsByStatus(db, "gjenforent");
+      
+      return publicRoute(ctx, () => <Home  reports={reports} />);
+    }),
 
-    route("/login", (ctx) => authRoute(ctx, LoginPage)),
+    route("/min-side", (ctx: any) => protectedRoute(ctx, MyPage)),
 
-    route("/register", (ctx) => authRoute(ctx, RegisterPage)),  
+    route("/login", (ctx: any) => authRoute(ctx, LoginPage)),
+
+    route("/register", (ctx: any) => authRoute(ctx, RegisterPage)),  
 ]),
 ]);

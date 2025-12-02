@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, integer, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, integer, boolean, real } from "drizzle-orm/pg-core";
 import { users } from "./users";
 
 export const reports = pgTable("reports", {
@@ -13,6 +13,9 @@ export const reports = pgTable("reports", {
   sex: text("sex"),
   colors: text("colors"),   
   features: text("features"), 
+
+  latitude: real("latitude"),
+  longitude: real("longitude"),
   
   isChipped: text("is_chipped"), 
   isSterilized: text("is_sterilized"),
@@ -23,3 +26,6 @@ export const reports = pgTable("reports", {
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+export type InsertReport = typeof reports.$inferInsert;
+export type SelectReport = typeof reports.$inferSelect;
