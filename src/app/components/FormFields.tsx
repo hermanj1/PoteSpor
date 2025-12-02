@@ -1,10 +1,12 @@
+import { ChangeEvent } from "react";
+
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 interface BaseProps {
   label: string;
   name: string;
   value: string;
-  onChange: (e: any) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
   className?: string;
 }
 
