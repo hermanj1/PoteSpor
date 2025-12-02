@@ -8,6 +8,11 @@ const formatDate = (dateString: string | null) => {
 };
 
 export const ReportCard = ({ report }: { report: SelectReport }) => {
+
+    const mapLink = report.latitude && report.longitude 
+    ? `/kart?lat=${report.latitude}&lng=${report.longitude}`
+    : null;
+
   return (
     <article className="report-card">
       <figure className="report-image-container">
@@ -19,7 +24,13 @@ export const ReportCard = ({ report }: { report: SelectReport }) => {
 
       <div className="report-content">
         <h3>{report.species} {report.petName ? `- ${report.petName}` : ""}</h3>
-        <p className="report-location">{report.locationDescription || "Ukjent sted"}</p>
+       <p className="report-location">{report.locationDescription || "Sted: "}
+          {mapLink && (
+            <a href={mapLink} className="map-link" style={{ color: '#3b82f6' }}>
+             Se i kart
+            </a>
+          )}
+        </p>
         <p className="report-date">
           <time dateTime={report.dateMissing || ""}>{formatDate(report.dateMissing)}</time>
         </p>

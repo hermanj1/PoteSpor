@@ -26,6 +26,8 @@ export default function NewReportPage({ user }: { user?: SelectUser }) {
     colors: "",
     features: "",
     imageUrl: "", 
+    latitude: 0, 
+    longitude: 0,
   });
 
   const handleChange = (e: any) => {
@@ -64,6 +66,10 @@ export default function NewReportPage({ user }: { user?: SelectUser }) {
     }
   };
 
+  const handleMapClick = (lat: number, lng: number) => {
+    setFormData(prev => ({ ...prev, latitude: lat, longitude: lng }));
+  };
+
   return (
     <form className="report-layout" onSubmit={handleSubmit}>
       <div className="form-column">
@@ -77,7 +83,7 @@ export default function NewReportPage({ user }: { user?: SelectUser }) {
         <FormInput label="Når ble dyret borte?" name="dateMissing" type="date" value={formData.dateMissing} onChange={handleChange} />
 
         <label>Hvor ble dyret borte?</label>
-        <ReportMap />
+        <ReportMap onPositionChange={handleMapClick} />
         
         <FormTextArea label="Beskrivelse av hendelse" name="description" value={formData.description} onChange={handleChange} />
       </div>

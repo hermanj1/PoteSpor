@@ -14,4 +14,6 @@ export const CreateReportSchema = z.object({
   colors: z.string().optional(), 
   features: z.string().optional(),
   imageUrl: z.string().optional(),
+  latitude: z.number().optional(),
+  longitude: z.number().optional(),
 });
