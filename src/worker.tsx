@@ -67,21 +67,21 @@ export default defineApp([
       const db = getDb(ctx.env);
       const reports = await getReportsByStatus(db, "savnet");
       
-      return publicRoute(ctx, () => <Home title="savnet" reports={reports} />);
+      return publicRoute(ctx, () => <Home  reports={reports} />);
     }),
 
     route("/funnet", async (ctx: any) => {
       const db = getDb(ctx.env);
       const reports = await getReportsByStatus(db, "funnet");
       
-      return publicRoute(ctx, () => <Home title="funnet" reports={reports} />);
+      return publicRoute(ctx, () => <Home  reports={reports} />);
     }),
 
     route("/gjenforent", async (ctx: any) => {
       const db = getDb(ctx.env);
       const reports = await getReportsByStatus(db, "gjenforent");
       
-      return publicRoute(ctx, () => <Home title="gjenforent" reports={reports} />);
+      return publicRoute(ctx, () => <Home  reports={reports} />);
     }),
 
     route("/min-side", (ctx: any) => protectedRoute(ctx, MyPage)),

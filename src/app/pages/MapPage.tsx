@@ -82,13 +82,7 @@ const styles = `
   .map-popup-content { 
     width: 150px; 
   }
-  
-  .map-popup-content h4 { 
-  }
-  
-  .badge { 
-  }
-  
+
   .popup-image {
     width: 100%;
     height: 100px;

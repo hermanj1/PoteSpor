@@ -4,6 +4,12 @@ import { ReportCard } from "../components/ReportCard";
 export default function Home({ reports, title }: { reports: SelectReport[], title?: string }) {
   return (
     <main className="page-container">
+      <section className="home-report">
+        <a href="/ny-annonse" className="new-report-btn">
+          + Opprett ny annonse
+        </a>
+      </section>
+
       {title && <h1>{title}</h1>}
         <section className="report-grid">
           {reports.map((report) => (
@@ -12,6 +18,22 @@ export default function Home({ reports, title }: { reports: SelectReport[], titl
       </section>
 
       <style>{`
+        .home-report {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 1rem;
+          margin-top: 2rem;
+        }
+
+        .new-report-btn {
+          background-color: #EEC6F5;
+          color: #000;
+          padding: 12px 32px;
+          border-radius: 6px;
+          font-weight: 600;
+          display: inline-block;
+        }
+
         .report-grid {
           display: grid;
           grid-template-columns: 1fr 1fr; 
