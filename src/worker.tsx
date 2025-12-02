@@ -10,7 +10,7 @@ import { loginHandler, registerHandler } from "./app/api/authController";
 import { createReportHandler } from "./app/api/reportController";
 import type { Env } from "@/db"; 
 import { getDb } from "@/db"; 
-import { getLatestReports, getReportsByStatus } from "@/app/lib/dbQueries"; 
+import { getLatestReports, getReportsByStatus, getAllReportsWithCoordinates } from "@/app/lib/dbQueries"; 
 import { publicRoute, protectedRoute, authRoute } from "@/app/lib/routeHelpers";
 
 type Context = {
@@ -49,7 +49,12 @@ export default defineApp([
 
     route("/ny-annonse", (ctx: any) => protectedRoute(ctx, NewReportPage)),
 
-    route("/kart", (ctx: any) => publicRoute(ctx, MapPage)),
+    route("/kart", async (ctx: any) => {
+      const db = getDb(ctx.env);
+      const reports = await getAllReportsWithCoordinates(db);
+
+      return publicRoute(ctx, () => <MapPage reports={reports} />);
+    }),
 
     route("/savnet", async (ctx: any) => {
       const db = getDb(ctx.env);

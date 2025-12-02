@@ -9,6 +9,7 @@ type MapComponents = {
   Marker: typeof import('react-leaflet').Marker;
   useMapEvents: typeof import('react-leaflet').useMapEvents;
   icon: typeof import('leaflet').icon; 
+  Popup: typeof import('react-leaflet').Popup;
 };
 
 export function useMap() {
@@ -26,7 +27,8 @@ export function useMap() {
           TileLayer: reactLeaflet.TileLayer,
           Marker: reactLeaflet.Marker,
           useMapEvents: reactLeaflet.useMapEvents,
-          icon: leaflet.icon
+          icon: leaflet.icon,
+          Popup: reactLeaflet.Popup
         });
       } catch (e) {
         console.error("useLeafletLoader failed:", e);

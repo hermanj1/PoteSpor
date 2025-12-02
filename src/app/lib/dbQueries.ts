@@ -1,5 +1,5 @@
 import { reports } from "@/db/schema/reports";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, isNotNull } from "drizzle-orm";
 import type { DbClient } from "@/db";
 
 export async function getLatestReports(db: DbClient) {
@@ -17,3 +17,11 @@ export async function getReportsByStatus(db: DbClient, status: string) {
     .where(eq(reports.status, status))
     .orderBy(desc(reports.createdAt));
 }
+
+export async function getAllReportsWithCoordinates(db: DbClient) {
+    return await db
+      .select()
+      .from(reports)
+      .where(isNotNull(reports.latitude)) 
+      .orderBy(desc(reports.createdAt));
+  }
