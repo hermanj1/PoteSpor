@@ -26,7 +26,7 @@ export const ReportCard = ({ report }: { report: SelectReport }) => {
         <h3>{report.species} {report.petName ? `- ${report.petName}` : ""}</h3>
        <p className="report-location">{report.locationDescription || "Sted: "}
           {mapLink && (
-            <a href={mapLink} className="map-link" style={{ color: '#3b82f6' }}>
+            <a href={mapLink} className="map-link styled-link">
              Se i kart
             </a>
           )}
@@ -99,5 +99,8 @@ const styles = `
   .report-desc {
     margin-top: 5px;
     font-size: 0.95rem;
+  }
+  .styled-link {
+    color: #3b82f6;
   }
 `;

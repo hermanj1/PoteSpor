@@ -97,7 +97,7 @@ export default function NewReportPage({ user }: { user?: SelectUser }) {
         <label htmlFor="petImage" className="image-upload">
             {previewUrl ? "Endre bilde" : "Last opp bilde"}
         </label>
-        <input id="petImage" type="file" accept="image/*" onChange={handleFileChange} style={{display: 'none'}} />
+        <input id="petImage" type="file" accept="image/*" onChange={handleFileChange} className="hidden-input" />
 
         {previewUrl && (
           <div>
@@ -158,6 +158,9 @@ export default function NewReportPage({ user }: { user?: SelectUser }) {
             color: #000000;
         }
 
+        .hidden-input {
+            display: none;
+        }
       `}</style>
     </form>
   );
