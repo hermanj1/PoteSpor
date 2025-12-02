@@ -84,8 +84,6 @@ export default function NewReportPage({ user }: { user?: SelectUser }) {
 
         <label>Hvor ble dyret borte?</label>
         <ReportMap onPositionChange={handleMapClick} />
-        
-        <FormTextArea label="Beskrivelse av hendelse" name="description" value={formData.description} onChange={handleChange} />
       </div>
 
       <div className="form-column">
@@ -94,13 +92,16 @@ export default function NewReportPage({ user }: { user?: SelectUser }) {
         <FormInput label="Rase" name="breed" placeholder="F.eks Golden Retriever" value={formData.breed} onChange={handleChange} />
         <FormInput label="Farger" name="colors" placeholder="Svart med hvite poter" value={formData.colors} onChange={handleChange} />
         <FormTextArea label="Kjennetegn" name="features" placeholder="Rødt halsbånd..." value={formData.features} onChange={handleChange} />
+        <FormTextArea label="Beskrivelse av hendelse" name="description" value={formData.description} onChange={handleChange} />
         
-        <label htmlFor="petImage" >Last opp bilde</label>
-        <input id="petImage" type="file" accept="image/*" onChange={handleFileChange} />
+        <label htmlFor="petImage" className="image-upload">
+            {previewUrl ? "Endre bilde" : "Last opp bilde"}
+        </label>
+        <input id="petImage" type="file" accept="image/*" onChange={handleFileChange} style={{display: 'none'}} />
 
         {previewUrl && (
           <div>
-            <img src={previewUrl} alt="Preview"  />
+            <img src={previewUrl} alt="Preview" className="preview-image" />
           </div>
         )}
 
@@ -112,6 +113,52 @@ export default function NewReportPage({ user }: { user?: SelectUser }) {
           {submitting ? "Lagrer..." : "Publiser annonse"}
         </button>
       </section>
+
+      <style>{`
+        .report-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .report-layout {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .image-upload {
+            padding: 10px;
+            border-radius: 6px;
+            margin: 16px 0;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+            background-color: #EEC6F5;
+        }
+
+        .preview-image {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            max-height: 300px;
+        }
+
+        .btn {
+            background-color: #EEC6F5;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #000000;
+        }
+
+      `}</style>
     </form>
   );
 }
