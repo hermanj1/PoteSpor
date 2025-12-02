@@ -5,8 +5,9 @@ import { MapPage } from "./app/pages/MapPage";
 import LoginPage from "./app/pages/LoginPage";
 import { RegisterPage } from "./app/pages/RegisterPage";
 import Home from "./app/pages/Home";
+import { MyPage } from "./app/pages/MyPage";
 import NewReportPage from "./app/pages/NewReportPage";
-import { loginHandler, registerHandler } from "./app/api/authController";
+import { loginHandler, registerHandler, logoutHandler } from "./app/api/authController";
 import { createReportHandler } from "./app/api/reportController";
 import type { Env } from "@/db"; 
 import { getDb } from "@/db"; 
@@ -29,6 +30,12 @@ export default defineApp([
   route("/api/register", async (ctx) => {
     const { request, env } = ctx as unknown as Context;
     if (request.method === "POST") return registerHandler(request, env);
+    return new Response("Method Not Allowed", { status: 405 });
+  }),
+
+  route("/api/logout", async (ctx) => {
+    const { request } = ctx as unknown as Context;
+    if (request.method === "POST") return logoutHandler(request);
     return new Response("Method Not Allowed", { status: 405 });
   }),
 
@@ -77,7 +84,7 @@ export default defineApp([
       return publicRoute(ctx, () => <Home title="gjenforent" reports={reports} />);
     }),
 
-    route("/min-side", (ctx: any) => protectedRoute(ctx, () => <h1>Min side</h1>)),
+    route("/min-side", (ctx: any) => protectedRoute(ctx, MyPage)),
 
     route("/login", (ctx: any) => authRoute(ctx, LoginPage)),
 
